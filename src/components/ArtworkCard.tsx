@@ -52,12 +52,13 @@ export default function ArtworkCard({ artwork, index }: Props) {
            <img 
              src={artwork.imageUrl} 
              alt={artwork.title}
-             className={`w-full h-full select-none ${artwork.imageClassName || 'object-cover'}`}
+             className={`w-full h-full select-none pointer-events-none ${artwork.imageClassName || 'object-cover'}`}
              style={artwork.imageStyle}
              onContextMenu={(e) => e.preventDefault()}
              draggable={false}
            />
-           <div className="absolute inset-x-0 bottom-0 p-5 pt-16 flex flex-col gap-1 pointer-events-none bg-gradient-to-t from-black/80 via-black/40 to-transparent text-shadow-sm pb-10">
+           <div className="absolute inset-0 bg-transparent z-[1]" onContextMenu={(e) => e.preventDefault()}></div>
+           <div className="absolute inset-x-0 bottom-0 p-5 pt-16 flex flex-col gap-1 pointer-events-none bg-gradient-to-t from-black/80 via-black/40 to-transparent text-shadow-sm pb-10 z-[2]">
              <h3 className="font-serif text-white text-xl md:text-2xl drop-shadow-md leading-snug">{artwork.title}</h3>
              {artwork.titleEn && <span className="font-sans text-neutral-300 text-xs tracking-wide drop-shadow-md block mb-1">{artwork.titleEn}</span>}
              <span className="font-sans text-xs text-[#A5D6A7] tracking-wider drop-shadow-md">{artwork.category}</span>
@@ -226,6 +227,7 @@ export default function ArtworkCard({ artwork, index }: Props) {
                      onContextMenu={(e) => e.preventDefault()}
                      draggable={false}
                    />
+                   <div className="absolute inset-0 bg-transparent z-[1]" onContextMenu={(e) => e.preventDefault()}></div>
                  </div>
                  <div className="w-full flex-none flex flex-col gap-3 pb-4 px-3">
                    {page.description && (

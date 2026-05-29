@@ -11,6 +11,14 @@
   body {
     @apply bg-[#08100D] text-[#E8F0EB] font-sans antialiased overflow-x-hidden;
   }
+  
+  /* Disable image saving and long-press menus, especially on iOS Safari */
+  img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
 }
 
 @layer utilities {

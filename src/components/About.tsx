@@ -34,7 +34,8 @@ export default function About() {
             onContextMenu={(e) => e.preventDefault()}
             draggable={false}
           />
-          <div className="absolute inset-0 ring-1 ring-inset ring-neutral-800 rounded-full"></div>
+          <div className="absolute inset-0 bg-transparent z-[1]" onContextMenu={(e) => e.preventDefault()}></div>
+          <div className="absolute inset-0 ring-1 ring-inset ring-neutral-800 rounded-full z-[2]"></div>
         </motion.div>
 
         {/* Bio */}
