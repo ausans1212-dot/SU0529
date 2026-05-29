@@ -29,8 +29,8 @@ export const artworksData: Artwork[] = [
     link: "https://mojoin.tw/F7Kry",
     episodes: "８回",
     episodesEn: "8 Episodes",
-    platform: "LINE WEBTOON",
-    platformEn: "LINE WEBTOON",
+    platform: "MOJOIN",
+    platformEn: "MOJOIN",
     status: "已完結",
     statusEn: "Completed",
     ageRestriction: true
