@@ -1,0 +1,6 @@
+{
+  "name": "漫畫家作品集",
+  "description": "A customized manga artist portfolio featuring glowing particle animations and modern elegant layout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
