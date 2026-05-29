@@ -72,7 +72,7 @@ export const artworksData: Artwork[] = [
     imageUrl: "/images/images_04.jpg",
     description: "「手漂亮的人也會是善良的人。」身為手控又母胎單身的彩春，一直抱持著此信念暗戀學長多年，某次終於鼓起勇氣告白卻遭到狠狠拒絕…但她卻意外與利敦相遇了。有點霸道、各方面條件都相當優秀的利敦，突然向彩春提出了試用交往…？！",
     descriptionEn: "\"People with beautiful hands are also kind-hearted.\" Caichun, a hand fetishist who has been single since birth, has long held this belief while secretly crushing on her senior for years. She finally mustered the courage to confess but was ruthlessly rejected... However, she unexpectedly meets Lidun. Lidun, who is slightly domineering and excellent in every way, suddenly proposes a trial relationship with Caichun...?!",
-    year: "2021-2024",
+    year: "2021",
     link: "https://www.webtoons.com/zh-hant/romance/falling-into-your-hands/list?title_no=3268",
     link18Plus: "https://www.webtoons.com/zh-hant/romance/falling-into-your-hands-r18/list?title_no=6363",
     episodes: "65回",
