@@ -30,7 +30,9 @@ export default function About() {
           <img 
             src={profileData.avatarUrl} 
             alt={profileData.name} 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover select-none pointer-events-none"
+            onContextMenu={(e) => e.preventDefault()}
+            draggable={false}
           />
           <div className="absolute inset-0 ring-1 ring-inset ring-neutral-800 rounded-full"></div>
         </motion.div>

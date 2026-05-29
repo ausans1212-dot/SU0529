@@ -52,8 +52,10 @@ export default function ArtworkCard({ artwork, index }: Props) {
            <img 
              src={artwork.imageUrl} 
              alt={artwork.title}
-             className={`w-full h-full ${artwork.imageClassName || 'object-cover'}`}
+             className={`w-full h-full select-none ${artwork.imageClassName || 'object-cover'}`}
              style={artwork.imageStyle}
+             onContextMenu={(e) => e.preventDefault()}
+             draggable={false}
            />
            <div className="absolute inset-x-0 bottom-0 p-5 pt-16 flex flex-col gap-1 pointer-events-none bg-gradient-to-t from-black/80 via-black/40 to-transparent text-shadow-sm pb-10">
              <h3 className="font-serif text-white text-xl md:text-2xl drop-shadow-md leading-snug">{artwork.title}</h3>
@@ -220,7 +222,9 @@ export default function ArtworkCard({ artwork, index }: Props) {
                    <img 
                      src={page.imageUrl} 
                      alt={`Extra ${idx}`}
-                     className="absolute inset-0 w-full h-full object-contain drop-shadow-md scale-105"
+                     className="absolute inset-0 w-full h-full object-contain drop-shadow-md scale-105 select-none pointer-events-none"
+                     onContextMenu={(e) => e.preventDefault()}
+                     draggable={false}
                    />
                  </div>
                  <div className="w-full flex-none flex flex-col gap-3 pb-4 px-3">
