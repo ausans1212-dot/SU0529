@@ -40,7 +40,7 @@ export default function App() {
                 transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 className="text-[#A5D6A7] tracking-[0.3em] pl-[0.3em] text-xs md:text-sm block mb-8 uppercase font-sans font-medium drop-shadow-md"
               >
-                Manga Artist & Illustrator
+                Moonlight Jasmine
               </motion.span>
               
               <motion.h1 
@@ -49,7 +49,7 @@ export default function App() {
                 transition={{ duration: 1.8, delay: 1.5, ease: [0.22, 1, 0.36, 1] }}
                 className="text-5xl md:text-7xl lg:text-8xl font-serif text-[#E8F0EB] tracking-widest pl-[0.1em] mb-10 drop-shadow-lg"
               >
-                微光與茉色
+                微光茉影
               </motion.h1>
               
               <motion.div

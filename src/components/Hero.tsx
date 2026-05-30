@@ -11,7 +11,7 @@ export default function Hero() {
           className="overflow-hidden"
         >
           <span className="block font-sans text-xs md:text-sm tracking-[0.3em] text-[#A5D6A7] uppercase mb-4 opacity-80">
-            Manga Artist & Illustrator
+            Moonlight Jasmine
           </span>
         </motion.div>
         
@@ -32,7 +32,7 @@ export default function Hero() {
             }}
             className="inline-block bg-[length:300%_auto] bg-clip-text text-transparent bg-[linear-gradient(90deg,#E8F0EB_0%,#E8F0EB_35%,#FEF08A_50%,#E8F0EB_65%,#E8F0EB_100%)] drop-shadow-sm"
           >
-            微光與<span className="italic">茉色</span>
+            微光<span className="italic">茉影</span>
           </motion.span>
         </motion.h1>
 
