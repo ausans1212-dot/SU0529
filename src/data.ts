@@ -38,7 +38,7 @@ export const artworksData: Artwork[] = [
   {
     id: "2",
     title: "影后：愛的角色扮演",
-    titleEn: "Born for the Spotlight: Love Roleplay",
+    titleEn: "Behind the Spotlight: Love Roleplay",
     category: "影集授權改編／連載漫畫",
     categoryEn: "Serialized Manga",
     imageUrl: "/images/images_03.jpg",

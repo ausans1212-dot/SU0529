@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { PenTool } from 'lucide-react';
+import { profileData } from '../data';
 
 export default function Navbar() {
   const scrollToSection = (id: string) => {
@@ -18,7 +19,7 @@ export default function Navbar() {
     >
       <div className="flex items-center gap-2 font-serif text-lg tracking-widest text-[#E8F0EB]">
         <PenTool className="w-5 h-5 text-[#A5D6A7]" />
-        <span>MOMO SU</span>
+        <span>{profileData.name} {profileData.pseudonym}</span>
       </div>
       
       <ul className="hidden md:flex items-center gap-8 font-sans text-sm tracking-widest text-neutral-400">
