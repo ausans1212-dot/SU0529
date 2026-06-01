@@ -1,6 +1,9 @@
 import { motion } from 'motion/react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Hero() {
+  const { language, t } = useLanguage();
+
   return (
     <section className="relative w-full h-[100vh] flex items-center justify-center px-6 pointer-events-none">
       <div className="text-center max-w-4xl mx-auto flex flex-col items-center">
@@ -32,19 +35,30 @@ export default function Hero() {
             }}
             className="inline-block bg-[length:300%_auto] bg-clip-text text-transparent bg-[linear-gradient(90deg,#E8F0EB_0%,#E8F0EB_35%,#FEF08A_50%,#E8F0EB_65%,#E8F0EB_100%)] drop-shadow-sm"
           >
-            微光<span className="italic">茉影</span>
+            {language === 'zh' ? (
+              <>微光<span className="italic">茉影</span></>
+            ) : (
+              <>微光<span className="italic">茉影</span></>
+            )}
           </motion.span>
         </motion.h1>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="font-sans text-base md:text-lg text-neutral-400 font-light tracking-wide max-w-lg mx-auto leading-relaxed"
+          className="text-center"
         >
-          以筆尖編織夢境，探尋樹影間遺落的故事。<br />
-          Tracing dreams through pen strokes, discovering stories left in the shadows of leaves.
-        </motion.p>
+          {language === 'zh' ? (
+            <p className="font-sans text-base md:text-lg text-neutral-400 font-light max-w-lg mx-auto leading-relaxed text-center">
+              以筆尖編織夢境，探尋樹影間遺落的故事。
+            </p>
+          ) : (
+            <p className="font-sans text-sm md:text-base text-neutral-400 font-light tracking-[0.05em] max-w-lg mx-auto leading-relaxed">
+              Tracing dreams through pen strokes, discovering stories left<br className="hidden md:block" /> in the shadows of leaves.
+            </p>
+          )}
+        </motion.div>
       </div>
 
       {/* Scroll Indicator */}

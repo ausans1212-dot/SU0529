@@ -1,13 +1,20 @@
 import { motion } from 'motion/react';
-import { PenTool } from 'lucide-react';
+import { PenTool, Globe } from 'lucide-react';
 import { profileData } from '../data';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Navbar() {
+  const { language, setLanguage, t } = useLanguage();
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'zh' ? 'en' : 'zh');
   };
 
   return (
@@ -22,10 +29,20 @@ export default function Navbar() {
         <span>{profileData.name} {profileData.pseudonym}</span>
       </div>
       
-      <ul className="hidden md:flex items-center gap-8 font-sans text-sm tracking-widest text-neutral-400">
-        <li className="hover:text-[#A5D6A7] transition-colors cursor-pointer" onClick={() => scrollToSection('gallery')}>作品集 / WORKS</li>
-        <li className="hover:text-[#A5D6A7] transition-colors cursor-pointer" onClick={() => scrollToSection('about')}>關於＆聯繫 / ABOUT & CONTACT</li>
-      </ul>
+      <div className="flex items-center gap-6 md:gap-8 font-sans text-sm tracking-widest text-neutral-400">
+        <ul className="hidden md:flex items-center gap-8">
+          <li className="hover:text-[#A5D6A7] transition-colors cursor-pointer" onClick={() => scrollToSection('gallery')}>{t('nav.projects')}</li>
+          <li className="hover:text-[#A5D6A7] transition-colors cursor-pointer" onClick={() => scrollToSection('about')}>{t('nav.about')}</li>
+        </ul>
+        
+        <button 
+          onClick={toggleLanguage}
+          className="flex items-center gap-2 text-neutral-300 hover:text-[#A5D6A7] transition-colors py-1 px-3 border border-white/10 rounded-full bg-white/5 hover:bg-white/10"
+        >
+          <Globe className="w-4 h-4" />
+          <span className="text-xs">{t('language.switch')}</span>
+        </button>
+      </div>
     </motion.nav>
   );
 }

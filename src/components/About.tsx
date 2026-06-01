@@ -1,8 +1,11 @@
 import { motion } from 'motion/react';
 import { profileData } from '../data';
 import { Instagram, Facebook, AtSign, Mail } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function About() {
+  const { language, t } = useLanguage();
+
   return (
     <section id="about" className="relative z-10 w-full max-w-7xl mx-auto px-6 py-24 md:py-32">
       <motion.div 
@@ -14,7 +17,7 @@ export default function About() {
       >
         <div className="flex-1 h-[1px] bg-neutral-800"></div>
         <h2 className="font-serif text-3xl md:text-4xl tracking-widest text-[#E8F0EB]">
-          關於作者 <span className="text-neutral-500 font-sans text-lg font-light">/ PROFILE</span>
+          {t('about.title')}
         </h2>
       </motion.div>
 
@@ -52,7 +55,7 @@ export default function About() {
           </div>
           
           <p className="font-sans font-light text-neutral-400 leading-loose text-justify md:text-left whitespace-pre-line">
-            {profileData.bio}
+            {t('about.bio')}
           </p>
 
           <div className="flex items-center gap-6 mt-4">

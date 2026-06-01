@@ -6,9 +6,11 @@ import Hero from './components/Hero';
 import Gallery from './components/Gallery';
 import About from './components/About';
 import Footer from './components/Footer';
+import { useLanguage } from './i18n/LanguageContext';
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const { language } = useLanguage();
 
   useEffect(() => {
     // Hide intro after 5.5 seconds (gives enough time for staggered text animations and reading)
@@ -49,7 +51,7 @@ export default function App() {
                 transition={{ duration: 1.8, delay: 1.5, ease: [0.22, 1, 0.36, 1] }}
                 className="text-5xl md:text-7xl lg:text-8xl font-serif text-[#E8F0EB] tracking-widest pl-[0.1em] mb-10 drop-shadow-lg"
               >
-                微光茉影
+                {language === 'zh' ? '微光茉影' : '微光茉影'}
               </motion.h1>
               
               <motion.div
@@ -65,12 +67,20 @@ export default function App() {
                 transition={{ duration: 1.5, delay: 2.5, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-col gap-4"
               >
-                <p className="text-[#E8F0EB]/90 tracking-[0.15em] pl-[0.15em] text-sm md:text-base font-light drop-shadow">
-                  以筆尖編織夢境，探尋樹影間遺落的故事。
-                </p>
-                <p className="text-[#A5D6A7]/70 text-xs md:text-sm tracking-[0.05em] font-sans drop-shadow-sm max-w-lg mx-auto">
-                  Tracing dreams through pen strokes, discovering stories left in the shadows of leaves.
-                </p>
+                {language === 'zh' ? (
+                  <>
+                    <p className="text-[#E8F0EB]/90 text-sm md:text-base font-light drop-shadow text-center">
+                      以筆尖編織夢境，探尋樹影間遺落的故事。
+                    </p>
+                    <p className="text-[#A5D6A7]/70 text-xs md:text-sm tracking-[0.05em] font-sans drop-shadow-sm max-w-lg mx-auto">
+                      Tracing dreams through pen strokes, discovering stories left in the shadows of leaves.
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-[#A5D6A7]/80 tracking-[0.05em] text-sm md:text-base font-light drop-shadow-sm max-w-lg mx-auto">
+                    Tracing dreams through pen strokes, discovering stories left<br className="hidden md:block" /> in the shadows of leaves.
+                  </p>
+                )}
               </motion.div>
             </div>
           </motion.div>
