@@ -7,6 +7,7 @@ export interface Artwork {
   category: string;
   categoryEn?: string;
   imageUrl: string;
+  videoUrl?: string;
   description?: string;
   descriptionEn?: string;
   year: string;

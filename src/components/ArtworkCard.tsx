@@ -51,16 +51,28 @@ export default function ArtworkCard({ artwork, index }: Props) {
           onScroll={handleScroll}
           className="w-full h-full flex overflow-x-auto snap-x snap-mandatory hide-scrollbar flex-1"
         >
-        {/* Page 1: Image View */}
+        {/* Page 1: Image/Video View */}
         <div className="min-w-full h-full snap-center relative flex items-center justify-center bg-[#0c1611] overflow-hidden">
-           <img 
-             src={artwork.imageUrl} 
-             alt={artwork.title}
-             className={`w-full h-full select-none pointer-events-none ${artwork.imageClassName || 'object-cover'}`}
-             style={artwork.imageStyle}
-             onContextMenu={(e) => e.preventDefault()}
-             draggable={false}
-           />
+           {artwork.videoUrl ? (
+             <video 
+               src={artwork.videoUrl} 
+               className={`w-full h-full select-none pointer-events-none object-cover object-left-top`}
+               autoPlay
+               loop
+               muted
+               playsInline
+               onContextMenu={(e) => e.preventDefault()}
+             />
+           ) : (
+             <img 
+               src={artwork.imageUrl} 
+               alt={artwork.title}
+               className={`w-full h-full select-none pointer-events-none ${artwork.imageClassName || 'object-cover'}`}
+               style={artwork.imageStyle}
+               onContextMenu={(e) => e.preventDefault()}
+               draggable={false}
+             />
+           )}
            <div 
              className="absolute inset-0 bg-transparent z-[1]" 
              onContextMenu={(e) => e.preventDefault()}
