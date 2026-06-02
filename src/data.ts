@@ -33,7 +33,15 @@ export const artworksData: Artwork[] = [
     platformEn: "MOJOIN",
     status: "已完結",
     statusEn: "Completed",
-    ageRestriction: true
+    ageRestriction: true,
+    extraPages: [
+      {
+        description: "這場戀愛別有居心 - PV",
+        iframeUrl: "https://www.youtube.com/embed/zxX1nWFS6HQ",
+        link: "https://youtube.com/shorts/zxX1nWFS6HQ?si=uI7Beq_IXMaIsUZ1",
+        linkText: "影音連結"
+      }
+    ]
   },
   {
     id: "2",

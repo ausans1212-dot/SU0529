@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ExternalLink, AlertTriangle, ChevronRight, ChevronLeft } from 'lucide-react';
 import { Artwork } from '../types';
@@ -15,6 +15,9 @@ export default function ArtworkCard({ artwork, index }: Props) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { language, t } = useLanguage();
 
+  const extraPagesCount = artwork.extraPages?.length || 0;
+  const totalPages = 2 + extraPagesCount;
+
   const handleScroll = () => {
     if (scrollContainerRef.current) {
       const scrollLeft = scrollContainerRef.current.scrollLeft;
@@ -23,9 +26,6 @@ export default function ArtworkCard({ artwork, index }: Props) {
       setActiveIndex(active);
     }
   };
-
-  const extraPagesCount = artwork.extraPages?.length || 0;
-  const totalPages = 2 + extraPagesCount;
 
   const scrollTo = (pageIndex: number) => {
     if (scrollContainerRef.current) {
@@ -42,7 +42,9 @@ export default function ArtworkCard({ artwork, index }: Props) {
       transition={{ duration: 0.8, delay: index * 0.1 }}
       className="relative w-full mx-auto flex flex-col gap-3 group"
     >
-      <div className="relative w-full aspect-[4/5] bg-[#0c1611] rounded-lg overflow-hidden shadow-2xl ring-1 ring-white/10 flex flex-col group/card">
+      <div 
+        className="relative w-full aspect-[4/5] bg-[#0c1611] rounded-lg overflow-hidden shadow-2xl ring-1 ring-white/10 flex flex-col group/card"
+      >
         {/* Horizontal Scroll Container */}
         <div
           ref={scrollContainerRef}
@@ -59,7 +61,10 @@ export default function ArtworkCard({ artwork, index }: Props) {
              onContextMenu={(e) => e.preventDefault()}
              draggable={false}
            />
-           <div className="absolute inset-0 bg-transparent z-[1]" onContextMenu={(e) => e.preventDefault()}></div>
+           <div 
+             className="absolute inset-0 bg-transparent z-[1]" 
+             onContextMenu={(e) => e.preventDefault()}
+           ></div>
            <div className="absolute inset-x-0 bottom-0 p-5 pt-16 flex flex-col gap-1 pointer-events-none bg-gradient-to-t from-black/80 via-black/40 to-transparent text-shadow-sm pb-10 z-[2]">
              <h3 className="font-serif text-white text-xl md:text-2xl drop-shadow-md leading-snug">{language === 'zh' ? artwork.title : (artwork.titleEn || artwork.title)}</h3>
              {language === 'zh' 
@@ -154,7 +159,25 @@ export default function ArtworkCard({ artwork, index }: Props) {
         {/* Extra Pages */}
         {artwork.extraPages?.map((page, idx) => (
           <div key={`extra-${idx}`} className="min-w-full h-full snap-center relative flex flex-col items-center justify-center bg-[#0c1611] overflow-hidden px-2 pt-2 pb-5">
-            {page.imageUrl ? (
+            {page.iframeUrl ? (
+               <>
+                 <div className="w-full flex-1 relative mb-2 mt-2 max-w-4xl mx-auto rounded-md overflow-hidden bg-black/50">
+                    <iframe 
+                      src={page.iframeUrl} 
+                      className="absolute inset-0 w-full h-full border-0 pointer-events-auto"
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    ></iframe>
+                 </div>
+                 {page.description && (
+                   <div className="w-full flex-none flex flex-col gap-3 pb-4 px-3">
+                     <p className="font-sans text-neutral-200 leading-relaxed text-sm whitespace-pre-line text-left pointer-events-auto">
+                       {page.description}
+                     </p>
+                   </div>
+                 )}
+               </>
+            ) : page.imageUrl ? (
                <>
                  <div className="w-full flex-[2] relative mb-2 mt-2 max-w-4xl mx-auto">
                    <img 
@@ -164,7 +187,10 @@ export default function ArtworkCard({ artwork, index }: Props) {
                      onContextMenu={(e) => e.preventDefault()}
                      draggable={false}
                    />
-                   <div className="absolute inset-0 bg-transparent z-[1]" onContextMenu={(e) => e.preventDefault()}></div>
+                   <div 
+                     className="absolute inset-0 bg-transparent z-[1]" 
+                     onContextMenu={(e) => e.preventDefault()}
+                   ></div>
                  </div>
                  <div className="w-full flex-none flex flex-col gap-3 pb-4 px-3">
                    {page.description && (
@@ -179,8 +205,8 @@ export default function ArtworkCard({ artwork, index }: Props) {
                        rel="noopener noreferrer"
                        className="group/btn flex items-center justify-center gap-2 w-full py-3 bg-[#A5D6A7] hover:bg-[#bbf0bd] text-[#08100D] rounded-sm transition-all duration-300 font-sans tracking-widest font-medium text-sm shadow-[0_0_20px_rgba(165,214,167,0.2)] hover:shadow-[0_0_30px_rgba(165,214,167,0.4)] pointer-events-auto"
                      >
-                       購買連結
-                       <ExternalLink className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
+                        {page.linkText || (language === 'zh' ? '購買連結' : 'Purchase')}
+                        <ExternalLink className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
                      </a>
                    )}
                  </div>
@@ -199,8 +225,8 @@ export default function ArtworkCard({ artwork, index }: Props) {
                        rel="noopener noreferrer"
                        className="mt-4 group/btn flex items-center justify-center gap-2 w-full py-3 bg-[#A5D6A7] hover:bg-[#bbf0bd] text-[#08100D] rounded-sm transition-all duration-300 font-sans tracking-widest font-medium text-sm shadow-[0_0_20px_rgba(165,214,167,0.2)] hover:shadow-[0_0_30px_rgba(165,214,167,0.4)] pointer-events-auto"
                      >
-                       購買連結
-                       <ExternalLink className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
+                        {page.linkText || (language === 'zh' ? '購買連結' : 'Purchase')}
+                        <ExternalLink className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
                      </a>
                    )}
                 </div>

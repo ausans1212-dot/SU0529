@@ -24,8 +24,10 @@ export interface Artwork {
   imageStyle?: React.CSSProperties;
   extraPages?: {
     imageUrl?: string;
+    iframeUrl?: string;
     description?: string;
     link?: string;
+    linkText?: string;
   }[];
 }
 
