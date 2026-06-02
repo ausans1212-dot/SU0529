@@ -24,6 +24,7 @@ export const artworksData: Artwork[] = [
     categoryEn: "Serialized Manga",
     imageUrl: "/images/images_02.JPEG",
     videoUrl: "/images/cover.mp4",
+    videoClassName: "object-cover object-left-top",
     description: "遭詐騙失去棲身之所的小職員，在聚餐後趁著酒意，與菁英上司度過一夜激情。原以為只是一場意亂情迷，卻在現實的無助中，誘惑暗戀已久的他——把他的家，變成自己的避風港。",
     descriptionEn: "A small employee who lost her shelter due to a scam spends a passionate night with her elite boss after drinking at a company dinner. What she thought was just a moment of infatuation turns into a temptation of her long-time crush in the helplessness of reality—turning his home into her own safe haven.",
     year: "2025",
