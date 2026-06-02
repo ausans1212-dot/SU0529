@@ -53,10 +53,18 @@ export default function ArtworkCard({ artwork, index }: Props) {
         >
         {/* Page 1: Image/Video View */}
         <div className="min-w-full h-full snap-center relative flex items-center justify-center bg-[#0c1611] overflow-hidden">
-           {artwork.videoUrl ? (
+           {artwork.youtubeUrl ? (
+             <iframe
+               src={`${artwork.youtubeUrl}?autoplay=1&loop=1&mute=1&playlist=${artwork.youtubeUrl.split('/').pop()?.split('?')[0]}&controls=0&modestbranding=1&playsinline=1`}
+               className={`absolute w-[180%] h-[180%] max-w-none select-none pointer-events-none`}
+               allow="autoplay; encrypted-media"
+               frameBorder="0"
+             />
+           ) : artwork.videoUrl ? (
              <video 
                src={artwork.videoUrl} 
-               className={`w-full h-full select-none pointer-events-none object-cover object-left-top`}
+               className={`w-full h-full select-none pointer-events-none ${artwork.videoClassName || 'object-cover'}`}
+               style={artwork.videoStyle}
                autoPlay
                loop
                muted
@@ -72,6 +80,29 @@ export default function ArtworkCard({ artwork, index }: Props) {
                onContextMenu={(e) => e.preventDefault()}
                draggable={false}
              />
+           )}
+           {artwork.title === "最特別的事" && (
+             <div className="absolute w-full h-full pointer-events-none z-[1] overflow-hidden inset-0">
+               {Array.from({ length: 15 }).map((_, i) => {
+                 const size = Math.random() * 20 + 8;
+                 const left = Math.random() * 100;
+                 const animDuration = Math.random() * 4 + 4;
+                 const animDelay = Math.random() * 5;
+                 return (
+                   <div
+                     key={i}
+                     className="absolute bottom-0 rounded-full bg-white/20 backdrop-blur-sm animate-floatUp border border-white/30"
+                     style={{
+                       width: `${size}px`,
+                       height: `${size}px`,
+                       left: `${left}%`,
+                       animationDuration: `${animDuration}s`,
+                       animationDelay: `${animDelay}s`,
+                     }}
+                   />
+                 );
+               })}
+             </div>
            )}
            <div 
              className="absolute inset-0 bg-transparent z-[1]" 

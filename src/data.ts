@@ -66,6 +66,12 @@ export const artworksData: Artwork[] = [
     imageStyle: { transform: "scale(1.25)", transformOrigin: "center 40%" },
     extraPages: [
       {
+        description: "影后：愛的角色扮演 - Shorts",
+        iframeUrl: "https://www.youtube.com/embed/Z8wk4xhnT7w",
+        link: "https://youtube.com/shorts/Z8wk4xhnT7w?si=GPiu8bM6LyxoL2qu",
+        linkText: "影音連結"
+      },
+      {
         imageUrl: "/images/images_06.png",
         description: "實體書已授權由台灣角川出版",
         link: "https://www.kadokawa.com.tw/products/9786264157254"
@@ -100,6 +106,9 @@ export const artworksData: Artwork[] = [
     category: "連載漫畫",
     categoryEn: "Serialized Manga",
     imageUrl: "/images/images_05.jpg",
+    videoUrl: "/images/special.mp4",
+    videoClassName: "object-cover",
+    videoStyle: { transform: "scale(1.4) translate(12%, 10%)", transformOrigin: "right bottom", objectPosition: "30% 70%" },
     description: "藏在心底的回憶，隨著夢想而清晰。 身為成人漫畫家的女孩夢想成為少女漫畫界的天后，決心改變的過程邂逅了不同的人們，但隨著距離夢想愈來愈近，深埋女孩心底的秘密也漸漸揭露，她終於明白什麼是最特別的事⋯",
     descriptionEn: "Memories hidden in the bottom of the heart become clearer with dreams. A girl who is an adult manga artist dreams of becoming the queen of the shoujo manga world. In the process of deciding to change, she meets different people, but as she gets closer to her dream, the secret buried deep in her heart is gradually revealed, and she finally understands what the most special thing is...",
     year: "2018",

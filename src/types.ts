@@ -8,6 +8,9 @@ export interface Artwork {
   categoryEn?: string;
   imageUrl: string;
   videoUrl?: string;
+  youtubeUrl?: string;
+  videoClassName?: string;
+  videoStyle?: React.CSSProperties;
   description?: string;
   descriptionEn?: string;
   year: string;

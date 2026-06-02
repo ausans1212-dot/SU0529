@@ -9,25 +9,30 @@ import Footer from './components/Footer';
 import { useLanguage } from './i18n/LanguageContext';
 
 export default function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const { language } = useLanguage();
+  const [appState, setAppState] = useState<'intro' | 'languageSelect' | 'main'>('intro');
+  const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
     // Hide intro after 5.5 seconds (gives enough time for staggered text animations and reading)
     const timer = setTimeout(() => {
-      setShowIntro(false);
+      setAppState('languageSelect');
     }, 5500); 
     return () => clearTimeout(timer);
   }, []);
 
+  const handleLanguageSelect = (lang: 'zh' | 'en') => {
+    setLanguage(lang);
+    setAppState('main');
+  };
+
   return (
-    <div className={`relative bg-[#08100D] transition-colors duration-1000 ${showIntro ? "h-screen overflow-hidden" : "min-h-screen"}`}>
+    <div className={`relative bg-[#08100D] transition-colors duration-1000 ${appState !== 'main' ? "h-screen overflow-hidden" : "min-h-screen"}`}>
       {/* Background Layer (Continuous) */}
       <KomorebiBackground />
       
       {/* Intro Animation Overlay */}
-      <AnimatePresence>
-        {showIntro && (
+      <AnimatePresence mode="wait">
+        {appState === 'intro' && (
           <motion.div
             key="intro-screen"
             initial={{ opacity: 1 }}
@@ -87,12 +92,57 @@ export default function App() {
         )}
       </AnimatePresence>
 
+      {/* Language Selection Overlay */}
+      <AnimatePresence>
+        {appState === 'languageSelect' && (
+          <motion.div
+            key="language-select"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, filter: "blur(5px)", scale: 1.05 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="absolute inset-0 z-40 flex items-center justify-center bg-transparent"
+          >
+            <div className="flex flex-col items-center gap-8">
+              <motion.h2 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="text-[#E8F0EB] font-sans text-sm md:text-base tracking-[0.15em] font-light text-center"
+              >
+                選擇語言 / Select Language
+              </motion.h2>
+              <div className="flex flex-row gap-6">
+                <motion.button
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  onClick={() => handleLanguageSelect('zh')}
+                  className="px-8 py-3 border border-[#A5D6A7]/30 text-[#E8F0EB] font-sans tracking-widest hover:bg-[#A5D6A7]/10 transition-colors duration-300 rounded-sm"
+                >
+                  繁體中文
+                </motion.button>
+                <motion.button
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8, duration: 0.8 }}
+                  onClick={() => handleLanguageSelect('en')}
+                  className="px-8 py-3 border border-[#A5D6A7]/30 text-[#E8F0EB] font-sans tracking-widest hover:bg-[#A5D6A7]/10 transition-colors duration-300 rounded-sm"
+                >
+                  English
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Main Scrollable Content */}
       <motion.div 
         initial={{ opacity: 0 }}
-        animate={{ opacity: showIntro ? 0 : 1 }}
-        transition={{ duration: 1.2, delay: showIntro ? 0 : 0.5, ease: "easeIn" }}
-        className={`relative z-10 w-full h-full ${showIntro ? 'pointer-events-none' : ''}`}
+        animate={{ opacity: appState === 'main' ? 1 : 0 }}
+        transition={{ duration: 1.2, ease: "easeIn" }}
+        className={`relative z-10 w-full h-full ${appState !== 'main' ? 'pointer-events-none' : ''}`}
       >
         <Navbar />
         <main>

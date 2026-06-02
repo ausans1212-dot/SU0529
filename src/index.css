@@ -31,3 +31,34 @@
   }
 }
 
+@keyframes floatUp {
+  0% {
+    transform: translateY(100%) scale(0.2);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-200%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes breatheLight {
+  0%, 100% {
+    filter: brightness(0.9) contrast(1);
+  }
+  50% {
+    filter: brightness(1.2) contrast(1.1);
+  }
+}
+
+.animate-floatUp {
+  animation: floatUp linear infinite;
+}
+
+.animate-breathe {
+  animation: breatheLight 4s ease-in-out infinite;
+}
+
