@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://su-0529.vercel.app/sitemap.xml
+Sitemap: https://sumomo.vercel.app/sitemap.xml
