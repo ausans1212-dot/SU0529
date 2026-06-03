@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
-import { motion } from 'motion/react';
-import { ExternalLink, AlertTriangle, ChevronRight, ChevronLeft } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { ExternalLink, AlertTriangle, ChevronRight, ChevronLeft, BookOpen, X, Eye } from 'lucide-react';
 import { Artwork } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
 
@@ -13,6 +14,12 @@ interface Props {
 export default function ArtworkCard({ artwork, index }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const lightboxScrollRef = useRef<HTMLDivElement>(null);
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+
   const { language, t } = useLanguage();
 
   const extraPagesCount = artwork.extraPages?.length || 0;
@@ -31,6 +38,39 @@ export default function ArtworkCard({ artwork, index }: Props) {
     if (scrollContainerRef.current) {
       const width = scrollContainerRef.current.clientWidth;
       scrollContainerRef.current.scrollTo({ left: width * pageIndex, behavior: 'smooth' });
+    }
+  };
+
+  const openLightbox = () => {
+    setLightboxIndex(0);
+    setIsLightboxOpen(true);
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    setIsLightboxOpen(false);
+    // Restore body scroll
+    document.body.style.overflow = 'unset';
+  };
+
+  const handleImageLoad = (idx: number) => {
+    setLoadedImages(prev => ({ ...prev, [idx]: true }));
+  };
+
+  const handleLightboxScroll = () => {
+    if (lightboxScrollRef.current) {
+      const scrollLeft = lightboxScrollRef.current.scrollLeft;
+      const width = lightboxScrollRef.current.clientWidth;
+      const active = Math.round(scrollLeft / width);
+      setLightboxIndex(active);
+    }
+  };
+
+  const scrollToLightboxPage = (pageIndex: number) => {
+    if (lightboxScrollRef.current) {
+      const width = lightboxScrollRef.current.clientWidth;
+      lightboxScrollRef.current.scrollTo({ left: width * pageIndex, behavior: 'smooth' });
     }
   };
 
@@ -170,8 +210,17 @@ export default function ArtworkCard({ artwork, index }: Props) {
                 {language === 'zh' ? artwork.description : (artwork.descriptionEn || artwork.description)}
               </p>
 
-              {(artwork.link || artwork.link18Plus) && (
+              {(artwork.link || artwork.link18Plus || (artwork.previewImages && artwork.previewImages.length > 0)) && (
                 <div className="mt-4 shrink-0 w-full flex flex-col gap-2">
+                  {artwork.previewImages && artwork.previewImages.length > 0 && (
+                    <button
+                      onClick={openLightbox}
+                      className="group/btn flex items-center justify-center gap-2 w-full py-3 bg-neutral-800 hover:bg-neutral-700 text-white rounded-sm transition-all duration-300 font-sans tracking-widest font-medium text-sm border border-neutral-700 hover:border-neutral-500"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      {language === 'zh' ? '作品局部預覽' : 'Preview Chapters'}
+                    </button>
+                  )}
                   {artwork.link && (
                     <a 
                       href={artwork.link}
@@ -313,10 +362,101 @@ export default function ArtworkCard({ artwork, index }: Props) {
       </div>
       </div>
       
-      {/* Year Below Card */}
-      <div className="px-1 mt-1 flex justify-center">
+      {/* Year & View Count Below Card */}
+      <div className="px-1 mt-1 flex justify-center items-center gap-4">
         <span className="font-mono text-sm text-neutral-500 tracking-wider font-light">{artwork.year}</span>
+        {artwork.viewCount && (
+          <div className="flex items-center gap-1.5 text-neutral-500" title={language === 'zh' ? '作品熱度' : 'View Count'}>
+            <Eye className="w-4 h-4 opacity-70" />
+            <span className="font-mono text-sm font-light">{artwork.viewCount}</span>
+          </div>
+        )}
       </div>
+
+      {/* Lightbox Modal */}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {isLightboxOpen && artwork.previewImages && artwork.previewImages.length > 0 && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col pointer-events-auto"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 md:p-6 text-white absolute top-0 left-0 right-0 z-10 bg-gradient-to-b from-black/80 to-transparent">
+                <span className="font-serif tracking-widest text-sm md:text-base">
+                  {language === 'zh' ? '作品局部預覽' : 'Preview'} ({lightboxIndex + 1}/{artwork.previewImages.length})
+                </span>
+                <button 
+                  onClick={closeLightbox}
+                  className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                  aria-label="Close"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Scrollable Images Container */}
+              <div 
+                ref={lightboxScrollRef}
+                onScroll={handleLightboxScroll}
+                className="flex-1 w-full h-full flex overflow-x-auto snap-x snap-mandatory hide-scrollbar"
+              >
+                {artwork.previewImages.map((img, idx) => (
+                  <div key={idx} className="min-w-full h-full snap-center flex items-center justify-center p-4 md:p-8 pt-20 pb-20 relative">
+                    {!loadedImages[idx] && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-8 h-8 md:w-10 md:h-10 border-2 border-neutral-700 border-t-white rounded-full animate-spin"></div>
+                      </div>
+                    )}
+                    <img 
+                      src={img} 
+                      alt={`Preview Page ${idx + 1}`}
+                      className={`max-w-full max-h-full object-contain rounded-md shadow-2xl transition-opacity duration-500 ease-in-out ${loadedImages[idx] ? 'opacity-100' : 'opacity-0'}`}
+                      draggable={false}
+                      onLoad={() => handleImageLoad(idx)}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Left/Right Arrows for Lightbox */}
+              {lightboxIndex > 0 && (
+                <button 
+                  onClick={() => scrollToLightboxPage(lightboxIndex - 1)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-colors"
+                >
+                  <ChevronLeft className="w-6 h-6 ml-[-2px]" />
+                </button>
+              )}
+              {lightboxIndex < artwork.previewImages.length - 1 && (
+                <button 
+                  onClick={() => scrollToLightboxPage(lightboxIndex + 1)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-colors"
+                >
+                  <ChevronRight className="w-6 h-6 mr-[-2px]" />
+                </button>
+              )}
+
+              {/* Bottom Dots */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3">
+                {artwork.previewImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => scrollToLightboxPage(idx)}
+                    className={`transition-all duration-300 rounded-full ${
+                      lightboxIndex === idx ? 'w-2.5 h-2.5 bg-white' : 'w-2 h-2 bg-white/40 hover:bg-white/80'
+                    }`}
+                    aria-label={`Go to page ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </motion.div>
   );
 }

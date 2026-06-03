@@ -27,6 +27,10 @@ const translations = {
     'project.extra': '實體書已授權由台灣角川出版',
     'project.read': '閱讀作品',
     'project.read.r18': '18+ 版本',
+    'share.title': '分享作品集',
+    'share.copy': '複製連結',
+    'share.copied': '已複製連結！',
+    'share.whatsapp': '分享至 WhatsApp',
     'language.switch': 'English'
   },
   en: {
@@ -47,6 +51,10 @@ const translations = {
     'project.extra': 'Physical book rights licensed to Kadokawa Taiwan',
     'project.read': 'Read',
     'project.read.r18': '18+ Version',
+    'share.title': 'Share Portfolio',
+    'share.copy': 'Copy Link',
+    'share.copied': 'Link copied!',
+    'share.whatsapp': 'Share to WhatsApp',
     'language.switch': '繁體中文'
   }
 };

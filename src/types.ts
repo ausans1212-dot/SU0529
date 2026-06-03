@@ -26,6 +26,8 @@ export interface Artwork {
   ageRestriction?: boolean;
   imageClassName?: string;
   imageStyle?: React.CSSProperties;
+  previewImages?: string[];
+  viewCount?: string | number;
   extraPages?: {
     imageUrl?: string;
     iframeUrl?: string;

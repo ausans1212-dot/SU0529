@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import KomorebiBackground from './components/KomorebiBackground';
+import MouseGlow from './components/MouseGlow';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Gallery from './components/Gallery';
 import About from './components/About';
 import Footer from './components/Footer';
+import FloatingShare from './components/FloatingShare';
 import { useLanguage } from './i18n/LanguageContext';
 
 export default function App() {
@@ -17,7 +19,18 @@ export default function App() {
     const timer = setTimeout(() => {
       setAppState('languageSelect');
     }, 5500); 
-    return () => clearTimeout(timer);
+
+    const handleContextMenu = (e: MouseEvent) => {
+      if (e.target instanceof HTMLImageElement) {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener('contextmenu', handleContextMenu);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('contextmenu', handleContextMenu);
+    };
   }, []);
 
   const handleLanguageSelect = (lang: 'zh' | 'en') => {
@@ -29,6 +42,7 @@ export default function App() {
     <div className={`relative bg-[#08100D] transition-colors duration-1000 ${appState !== 'main' ? "h-screen overflow-hidden" : "min-h-screen"}`}>
       {/* Background Layer (Continuous) */}
       <KomorebiBackground />
+      <MouseGlow />
       
       {/* Intro Animation Overlay */}
       <AnimatePresence mode="wait">
@@ -151,6 +165,7 @@ export default function App() {
           <About />
         </main>
         <Footer />
+        <FloatingShare />
       </motion.div>
     </div>
   );

@@ -36,6 +36,13 @@ export const artworksData: Artwork[] = [
     status: "已完結",
     statusEn: "Completed",
     ageRestriction: true,
+    viewCount: "35k",
+    previewImages: [
+      "/images/preview_01.JPG",
+      "/images/preview_02.JPG",
+      "/images/preview_03.JPG",
+      "/images/preview_04.JPG"
+    ],
     extraPages: [
       {
         description: "這場戀愛別有居心 - PV",
@@ -63,6 +70,7 @@ export const artworksData: Artwork[] = [
     credits: "編劇/柯映安、漫畫/蘇茉茉、授權/良人行影業有限公司",
     status: "已完結",
     statusEn: "Completed",
+    viewCount: "12k",
     imageClassName: "object-cover",
     imageStyle: { transform: "scale(1.25)", transformOrigin: "center 40%" },
     extraPages: [
@@ -97,6 +105,7 @@ export const artworksData: Artwork[] = [
     platformEn: "LINE WEBTOON",
     status: "第一季",
     statusEn: "Season 1",
+    viewCount: "185k",
     imageClassName: "object-cover",
     imageStyle: { transform: "scale(1.05)", transformOrigin: "center top" }
   },
@@ -120,6 +129,7 @@ export const artworksData: Artwork[] = [
     platformEn: "LINE WEBTOON",
     status: "已完結",
     statusEn: "Completed",
+    viewCount: "89k",
     imageClassName: "object-cover",
     imageStyle: { transform: "scale(1.05)", transformOrigin: "center top" }
   }
