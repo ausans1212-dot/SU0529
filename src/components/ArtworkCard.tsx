@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -8,8 +8,6 @@ import {
   ChevronLeft,
   BookOpen,
   X,
-  Eye,
-  Heart,
   Volume2,
   VolumeX,
 } from "lucide-react";
@@ -54,42 +52,6 @@ export default function ArtworkCard({ artwork, index }: Props) {
       }
     }
     setTouchStartX(null);
-  };
-
-  // View Count & Like State
-  const baseViewCount = useMemo(() => {
-    if (!artwork.viewCount) return 0;
-    let numStr = artwork.viewCount.toLowerCase();
-    let multiplier = 1;
-    if (numStr.includes("k")) {
-      multiplier = 1000;
-      numStr = numStr.replace("k", "");
-    }
-    let num = parseFloat(numStr) * multiplier;
-    if (multiplier === 1000) {
-      num += Math.floor(Math.random() * 900); // randomize tail for realism
-    }
-    return num;
-  }, [artwork.viewCount]);
-
-  const [currentViews, setCurrentViews] = useState(baseViewCount);
-  const [isLiked, setIsLiked] = useState(false);
-
-  useEffect(() => {
-    if (baseViewCount === 0) return;
-    const interval = setInterval(() => {
-      if (Math.random() > 0.6) {
-        setCurrentViews((prev) => prev + Math.floor(Math.random() * 3) + 1);
-      }
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [baseViewCount]);
-
-  const handleLike = () => {
-    if (!isLiked) {
-      setIsLiked(true);
-      setCurrentViews((prev) => prev + 1);
-    }
   };
 
   // Audio Fade Helper
@@ -604,29 +566,11 @@ export default function ArtworkCard({ artwork, index }: Props) {
         </div>
       </div>
 
-      {/* Year & View Count Below Card */}
-      <div className="px-1 mt-1 flex justify-center items-center gap-4">
+      {/* Year Below Card */}
+      <div className="px-1 mt-1 flex justify-center items-center">
         <span className="font-mono text-sm text-neutral-500 tracking-wider font-light">
           {artwork.year}
         </span>
-        {artwork.viewCount && (
-          <button
-            onClick={handleLike}
-            className={`flex items-center gap-1.5 transition-all duration-300 relative ${
-              isLiked ? "text-red-400" : "text-neutral-500 hover:text-neutral-300"
-            }`}
-            title={language === "zh" ? "點擊按讚/熱度" : "Like / Views"}
-          >
-            <Heart
-              className={`w-4 h-4 transition-transform duration-300 ${
-                isLiked ? "fill-red-500 text-red-500 scale-110" : "opacity-70"
-              }`}
-            />
-            <span className="font-mono text-sm font-light">
-              {currentViews.toLocaleString()}
-            </span>
-          </button>
-        )}
       </div>
 
       {/* Lightbox Modal */}
