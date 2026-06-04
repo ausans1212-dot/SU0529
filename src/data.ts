@@ -117,6 +117,8 @@ export const artworksData: Artwork[] = [
     categoryEn: "Serialized Manga",
     imageUrl: "/images/images_05.jpg",
     videoUrl: "/images/special.mp4",
+    audioUrl: "/images/Sacred_Tide.mp3",
+    audioStartTime: 3,
     videoClassName: "object-cover",
     videoStyle: { transform: "scale(1.4) translate(12%, 10%)", transformOrigin: "right bottom", objectPosition: "30% 70%" },
     description: "藏在心底的回憶，隨著夢想而清晰。 身為成人漫畫家的女孩夢想成為少女漫畫界的天后，決心改變的過程邂逅了不同的人們，但隨著距離夢想愈來愈近，深埋女孩心底的秘密也漸漸揭露，她終於明白什麼是最特別的事⋯",

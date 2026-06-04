@@ -9,6 +9,8 @@ export interface Artwork {
   imageUrl: string;
   videoUrl?: string;
   youtubeUrl?: string;
+  audioUrl?: string;
+  audioStartTime?: number;
   videoClassName?: string;
   videoStyle?: React.CSSProperties;
   description?: string;
