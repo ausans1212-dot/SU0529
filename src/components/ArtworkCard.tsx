@@ -117,32 +117,18 @@ export default function ArtworkCard({ artwork, index }: Props) {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const setTime = () => {
+    const enforceStartTime = () => {
       if (
         artwork.audioStartTime &&
-        audio.currentTime < artwork.audioStartTime
+        audio.currentTime < artwork.audioStartTime - 0.5
       ) {
         audio.currentTime = artwork.audioStartTime;
       }
     };
 
-    const handleEnded = () => {
-      if (artwork.audioStartTime) {
-        audio.currentTime = artwork.audioStartTime;
-      } else {
-        audio.currentTime = 0;
-      }
-      audio.play().catch((e) => console.log("Audio play error", e));
-    };
-
-    audio.addEventListener("loadedmetadata", setTime);
-    if (audio.readyState >= 1) {
-      setTime();
-    }
-    audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("timeupdate", enforceStartTime);
     return () => {
-      audio.removeEventListener("loadedmetadata", setTime);
-      audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("timeupdate", enforceStartTime);
     };
   }, [artwork.audioStartTime]);
 
@@ -309,6 +295,7 @@ export default function ArtworkCard({ artwork, index }: Props) {
                 <audio
                   ref={audioRef}
                   src={artwork.audioUrl}
+                  loop
                   preload="auto"
                   className="w-0 h-0 opacity-0 pointer-events-none"
                 />
